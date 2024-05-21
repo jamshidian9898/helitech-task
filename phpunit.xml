@@ -12,6 +12,14 @@
             <directory>tests/Feature</directory>
         </testsuite>
 
+        <!-- task domain tests -->
+        <testsuite name="Task-Unit">
+            <directory>app/Domain/Task/Tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Task-Feature">
+            <directory>app/Domain/Task/Tests/Feature</directory>
+        </testsuite>
+
         <!-- user domain tests -->
         <testsuite name="User-Unit">
             <directory>app/Domain/User/Tests/Unit</directory>
