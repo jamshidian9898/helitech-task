@@ -4,6 +4,26 @@ namespace App\Http\Requests\Task;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @OA\Schema(
+ *     schema="UpdateTaskRequest",
+ *     @OA\Property(
+ *         property="title",
+ *         type="string",
+ *         description="Task's title"
+ *     ),
+ *     @OA\Property(
+ *         property="description",
+ *         type="string",
+ *         description="Task's description"
+ *     ),
+ *     @OA\Property(
+ *         property="completed",
+ *         type="boolean",
+ *         description="Task's completed status"
+ *     ),
+ * )
+ */
 class UpdateTaskRequest extends FormRequest
 {
     /**
