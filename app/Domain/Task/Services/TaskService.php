@@ -2,6 +2,7 @@
 
 namespace App\Domain\Task\Services;
 
+use App\Domain\Task\Events\TaskUpdated;
 use App\Domain\Task\Exceptions\notFoundTaskException;
 use App\Domain\Task\Models\Task;
 use App\Domain\Task\Repositories\TaskRepository;
@@ -45,7 +46,11 @@ class TaskService
         if (is_null($task))
             throw new notFoundTaskException('not found task.');
 
-        return $this->taskRepository->update($task, $data);
+        $updatedTask = $this->taskRepository->update($task, $data);
+        
+        broadcast(new TaskUpdated($task));
+
+        return $updatedTask;
     }
 
     public function deleteTask($id): void

@@ -25,4 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 return response()->json(['message' => $e->getMessage()], 404);
             }
         });
+    })
+    ->withSchedule(function (Schedule $schedule) {
+        $schedule->job(new CompleteOldTasks())->daily();
     })->create();
