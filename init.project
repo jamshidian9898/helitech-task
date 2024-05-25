@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+composer install
+
+cp .env.example .env
+
+php artisan key:generate
+
+find . -type f -exec chmod 644 {} \;
+find . -type d -exec chmod 755 {} \;
+
+chmod -R 777 ./.*
+chmod -R 777 ./*
+
+chown 1000:1000 -R ./*
+chown 1000:1000 -R ./.*

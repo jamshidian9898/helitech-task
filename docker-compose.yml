@@ -1,0 +1,59 @@
+version: '3.1'
+
+services:
+  wecode:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        ports:
+            - '80:80'
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - development
+  db-mysql:
+    image: "mysql/mysql-server:8.0"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: "mc_crud_test"
+      MYSQL_USER: "development"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - db_mysql:/var/lib/mysql
+    networks:
+      - development
+    healthcheck:
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - "-p password"
+      retries: 3
+      timeout: 5s
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db-mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: password
+    depends_on:
+      - db-mysql
+    networks:
+      - development
+
+volumes:
+  db_mysql:
+    driver: local
+
+networks:
+  development:
+    name: development
+    driver: bridge

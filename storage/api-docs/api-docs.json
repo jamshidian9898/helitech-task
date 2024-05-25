@@ -1,0 +1,251 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Task manager",
+        "description": "Tasks api endpoints",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/tasks": {
+            "post": {
+                "summary": "get list of tasks",
+                "operationId": "e1dabe7b0226acf186b2e7c2af7135bd",
+                "responses": {
+                    "200": {
+                        "description": "list of tasks",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TaskResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Tasks": {
+            "post": {
+                "summary": "Create a new task",
+                "operationId": "a3233f22bd50f0b64d556f2742a896f0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateNewTaskRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Task created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/Tasks/{id}": {
+            "get": {
+                "summary": "Show an exists task",
+                "operationId": "a6a30fa0b4995a60158eb2a897989f7c",
+                "responses": {
+                    "200": {
+                        "description": "Show Task",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "notFound provided task."
+                    }
+                }
+            },
+            "put": {
+                "summary": "update an exists task",
+                "operationId": "e8713482e159fe3e2907c4a544c90aab",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTaskRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "update Task",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "404": {
+                        "description": "notFound provided task."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "delete an exists task",
+                "operationId": "6fa2e0f3eea50e69ede05457d629a5e1",
+                "responses": {
+                    "204": {
+                        "description": "delete Task"
+                    },
+                    "404": {
+                        "description": "notFound provided task."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CreateNewTaskRequest": {
+                "required": [
+                    "title"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Task's title",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Task's description",
+                        "type": "string"
+                    },
+                    "completed": {
+                        "description": "Task's completed status",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateTaskRequest": {
+                "properties": {
+                    "title": {
+                        "description": "Task's title",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Task's description",
+                        "type": "string"
+                    },
+                    "completed": {
+                        "description": "Task's completed status",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginUserRequest": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "User's email",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "description": "User's password",
+                        "type": "string",
+                        "format": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterUserRequest": {
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "User's name",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "User's email",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "description": "User's password",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "password_confirmation": {
+                        "description": "Password confirmation",
+                        "type": "string",
+                        "format": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskResource": {
+                "required": [
+                    "id",
+                    "title",
+                    "description",
+                    "completed",
+                    "created_at"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Task ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "description": "Task's title",
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "description": {
+                        "description": "Task's description",
+                        "type": "string"
+                    },
+                    "completed": {
+                        "description": "Task's completed",
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "description": "Task's created_at",
+                        "type": "string",
+                        "format": "HH:mm:ss"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
